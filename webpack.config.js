@@ -1,31 +1,29 @@
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-    // JavaScript 执行入口文件
-    entry: './main.js',
+    // 执行入口文件
+    entry: './app/main',
     output: {
-        // 把所有依赖的模块合并输出到一个 bundle.js 文件
         filename: 'bundle.js',
-        // 把输出文件都放到 dist 目录下
         path: path.resolve(__dirname, './dist'),
+    },
+    resolve: {
+        // 先尝试 ts 后缀的 TypeScript 源码文件
+        extensions: ['.ts', '.js']
     },
     module: {
         rules: [
             {
-                // 用正则去匹配要用该 loader 转换的 CSS 文件
-                test: /\.css$/,
-                use: ExtractTextPlugin.extract({
-                    // 转换 .css 文件需要使用的 Loader
-                    use: ['css-loader'],
-                }),
+                test: /\.ts$/,
+                loader: 'awesome-typescript-loader',
+                include: [
+                    path.resolve(__dirname, "app"),
+                ],
+                exclude: [
+                    path.resolve(__dirname, "../wordpress"),
+                ]
             }
         ]
     },
-    plugins: [
-        new ExtractTextPlugin({
-            // 从 .js 文件中提取出来的 .css 文件的名称
-            filename: `[name]_[md5:contenthash:hex:8].css`,
-        }),
-    ]
+    devtool: 'source-map',// 输出 Source Map 方便在浏览器里调试 TypeScript 代码
 };
