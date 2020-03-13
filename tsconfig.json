@@ -10,7 +10,7 @@
     },
     "include": [
         "app/*.ts"
-    ]
+    ],
     "exclude": [
         // 不编译这些目录里的文件
         "node_modules"
