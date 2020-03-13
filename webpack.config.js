@@ -1,5 +1,6 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = {
     // 执行入口文件
@@ -39,5 +40,6 @@ module.exports = {
             // 从 .js 文件中提取出来的 .css 文件的名称
             filename: `[name]_[md5:contenthash:hex:8].css`,
         }),
+        new VueLoaderPlugin()
     ]
 };
